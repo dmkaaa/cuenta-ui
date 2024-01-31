@@ -1,8 +1,3 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
-<template>
-  <main>
-    Home page.
-  </main>
-</template>
+<template>Welcome!</template>
