@@ -1,5 +1,5 @@
 export interface Account {
-  id: number
+  id?: number
   code: string
   type: AccountType
   name: string
@@ -9,3 +9,5 @@ export enum AccountType {
   Asset = 'ASSET',
   Liability = 'LIABILITY'
 }
+
+export const getAccountTypes = () => [AccountType.Asset, AccountType.Liability]
