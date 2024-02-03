@@ -1,41 +1,20 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { type Account, AccountType, getAccountTypes } from '@/types/account'
+import { useAccountsStore } from '@/stores/account'
 import AppButton from '@/components/AppButton.vue'
 import AppTextInput from '@/components/AppTextInput.vue'
 import AppSelect from '@/components/AppSelect.vue'
 import AppModal from '@/components/AppModal.vue'
 
-const accounts = ref<Account[]>([])
+const accountsStore = useAccountsStore()
 const accountTypes = ref(getAccountTypes())
 const accountModel = reactive<Account>({ code: '', type: AccountType.Asset, name: '' })
 
 const modal = ref<InstanceType<typeof AppModal> | null>(null)
 
-function load() {
-  fetch('http://localhost:8080/v1/accounts')
-    .then((response) => response.json())
-    .then((result) => (accounts.value = result))
-}
-
 function save() {
-  let url = 'http://localhost:8080/v1/accounts'
-  let method = 'POST'
-
-  if (accountModel.id) {
-    url = 'http://localhost:8080/v1/accounts/' + accountModel.id
-    method = 'PUT'
-  }
-
-  fetch(url, {
-    method,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(accountModel)
-  })
-    .then(() => load())
-    .then(() => modal.value?.close())
+  accountsStore.save(accountModel).then(() => modal.value?.close())
 }
 
 function openForm(account?: Account) {
@@ -45,8 +24,6 @@ function openForm(account?: Account) {
   accountModel.name = account?.name || ''
   modal.value?.open()
 }
-
-load()
 </script>
 
 <template>
@@ -63,7 +40,7 @@ load()
       </tr>
     </thead>
     <tbody>
-      <tr v-for="account in accounts" :key="account.id">
+      <tr v-for="account in accountsStore.accounts" :key="account.id">
         <td class="p-2 pl-0">{{ account.type }}</td>
         <td class="p-2">{{ account.code }}</td>
         <td class="p-2">{{ account.name }}</td>
