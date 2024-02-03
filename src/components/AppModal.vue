@@ -1,0 +1,23 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const isOpen = ref(false)
+const open = () => (isOpen.value = true)
+const close = () => (isOpen.value = false)
+
+defineExpose({
+  open,
+  close
+})
+</script>
+
+<template>
+  <Teleport to="body" v-if="isOpen">
+    <div class="fixed top-0 left-0 w-full h-full bg-black opacity-50" @click="close()"></div>
+    <div
+      class="absolute top-1/4 left-0 right-0 w-1/3 mx-auto bg-slate-800 border border-slate-700 rounded-md px-5 py-3"
+    >
+      <slot />
+    </div>
+  </Teleport>
+</template>

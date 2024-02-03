@@ -4,21 +4,54 @@ import { type Account, AccountType, getAccountTypes } from '@/types/account'
 import AppButton from '@/components/AppButton.vue'
 import AppTextInput from '@/components/AppTextInput.vue'
 import AppSelect from '@/components/AppSelect.vue'
+import AppModal from '@/components/AppModal.vue'
 
 const accounts = ref<Account[]>([])
 const accountTypes = ref(getAccountTypes())
 const accountModel = reactive<Account>({ code: '', type: AccountType.Asset, name: '' })
 
-const modalOpen = ref(false)
+const modal = ref<InstanceType<typeof AppModal> | null>(null)
 
-fetch('http://localhost:8080/v1/accounts')
-  .then((response) => response.json())
-  .then((result) => (accounts.value = result))
+function load() {
+  fetch('http://localhost:8080/v1/accounts')
+    .then((response) => response.json())
+    .then((result) => (accounts.value = result))
+}
+
+function save() {
+  let url = 'http://localhost:8080/v1/accounts'
+  let method = 'POST'
+
+  if (accountModel.id) {
+    url = 'http://localhost:8080/v1/accounts/' + accountModel.id
+    method = 'PUT'
+  }
+
+  fetch(url, {
+    method,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(accountModel)
+  })
+    .then(() => load())
+    .then(() => modal.value?.close())
+}
+
+function openForm(account?: Account) {
+  accountModel.id = account?.id
+  accountModel.type = account?.type || AccountType.Asset
+  accountModel.code = account?.code || ''
+  accountModel.name = account?.name || ''
+  modal.value?.open()
+}
+
+load()
 </script>
 
 <template>
   <div class="float-end">
-    <AppButton @click="modalOpen = true">Add</AppButton>
+    <AppButton @click="openForm()">Add</AppButton>
   </div>
   <table class="table-fixed w-full">
     <thead>
@@ -35,38 +68,33 @@ fetch('http://localhost:8080/v1/accounts')
         <td class="p-2">{{ account.code }}</td>
         <td class="p-2">{{ account.name }}</td>
         <td class="p-2 pr-0 text-right">
-          <button type="button" class="text-cyan-700 hover:text-cyan-600 font-medium">Edit</button>
+          <button
+            type="button"
+            class="text-cyan-700 hover:text-cyan-600 font-medium"
+            @click="openForm(account)"
+          >
+            Edit
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <Teleport to="body">
-    <div
-      v-if="modalOpen"
-      class="fixed top-0 left-0 w-full h-full bg-slate-800 opacity-50"
-      @click="modalOpen = false"
-    ></div>
-
-    <div
-      v-if="modalOpen"
-      class="absolute top-1/4 left-0 right-0 w-1/3 mx-auto bg-slate-800 border border-slate-700 rounded-md px-5 py-3"
-    >
-      <h3 class="text-xl mb-4">New account</h3>
-      <div>
-        <div class="mb-2">
-          <AppSelect v-model="accountModel.type" :options="accountTypes"></AppSelect>
-        </div>
-        <div class="mb-2">
-          <AppTextInput v-model="accountModel.code" placeholder="Code" />
-        </div>
-        <div class="mb-4">
-          <AppTextInput v-model="accountModel.name" placeholder="Name" />
-        </div>
-        <div class="text-right">
-          <AppButton>Save</AppButton>
-        </div>
+  <AppModal ref="modal">
+    <h3 class="text-2xl mb-4">New account</h3>
+    <div>
+      <div class="mb-2">
+        <AppSelect v-model="accountModel.type" :options="accountTypes"></AppSelect>
+      </div>
+      <div class="mb-2">
+        <AppTextInput v-model="accountModel.code" placeholder="Code" />
+      </div>
+      <div class="mb-4">
+        <AppTextInput v-model="accountModel.name" placeholder="Name" />
+      </div>
+      <div class="text-right">
+        <AppButton @click="save()">Save</AppButton>
       </div>
     </div>
-  </Teleport>
+  </AppModal>
 </template>
