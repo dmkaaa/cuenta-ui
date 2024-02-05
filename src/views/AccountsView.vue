@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { type Account, AccountType, getAccountTypes } from '@/types/account'
+import { type Account, AccountType } from '@/types/account'
 import { useAccountsStore } from '@/stores/account'
 import AppButton from '@/components/AppButton.vue'
+import AppButtonLink from '@/components/AppButtonLink.vue'
 import AppTextInput from '@/components/AppTextInput.vue'
-import AppSelect from '@/components/AppSelect.vue'
+import AccountTypeSelect from '@/components/AccountTypeSelect.vue'
 import AppModal from '@/components/AppModal.vue'
 
 const accountsStore = useAccountsStore()
-const accountTypes = ref(getAccountTypes())
 const accountModel = reactive<Account>({ code: '', type: AccountType.Asset, name: '' })
 
 const modal = ref<InstanceType<typeof AppModal> | null>(null)
@@ -27,7 +27,7 @@ function openForm(account?: Account) {
 </script>
 
 <template>
-  <div class="float-end">
+  <div class="text-end">
     <AppButton @click="openForm()">Add</AppButton>
   </div>
   <table class="table-fixed w-full">
@@ -45,13 +45,7 @@ function openForm(account?: Account) {
         <td class="p-2">{{ account.code }}</td>
         <td class="p-2">{{ account.name }}</td>
         <td class="p-2 pr-0 text-right">
-          <button
-            type="button"
-            class="text-cyan-700 hover:text-cyan-600 font-medium"
-            @click="openForm(account)"
-          >
-            Edit
-          </button>
+          <AppButtonLink @click="openForm(account)">Edit</AppButtonLink>
         </td>
       </tr>
     </tbody>
@@ -62,7 +56,7 @@ function openForm(account?: Account) {
     <div>
       <form @submit.prevent="save()">
         <div class="mb-2">
-          <AppSelect v-model="accountModel.type" :options="accountTypes"></AppSelect>
+          <AccountTypeSelect v-model="accountModel.type"></AccountTypeSelect>
         </div>
         <div class="mb-2">
           <AppTextInput v-model="accountModel.code" placeholder="Code" />

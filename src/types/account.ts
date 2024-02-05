@@ -9,5 +9,3 @@ export enum AccountType {
   Asset = 'ASSET',
   Liability = 'LIABILITY'
 }
-
-export const getAccountTypes = () => [AccountType.Asset, AccountType.Liability]
