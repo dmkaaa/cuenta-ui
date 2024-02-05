@@ -60,18 +60,20 @@ function openForm(account?: Account) {
   <AppModal ref="modal">
     <h3 class="text-2xl mb-4">New account</h3>
     <div>
-      <div class="mb-2">
-        <AppSelect v-model="accountModel.type" :options="accountTypes"></AppSelect>
-      </div>
-      <div class="mb-2">
-        <AppTextInput v-model="accountModel.code" placeholder="Code" />
-      </div>
-      <div class="mb-4">
-        <AppTextInput v-model="accountModel.name" placeholder="Name" />
-      </div>
-      <div class="text-right">
-        <AppButton @click="save()">Save</AppButton>
-      </div>
+      <form @submit.prevent="save()">
+        <div class="mb-2">
+          <AppSelect v-model="accountModel.type" :options="accountTypes"></AppSelect>
+        </div>
+        <div class="mb-2">
+          <AppTextInput v-model="accountModel.code" placeholder="Code" />
+        </div>
+        <div class="mb-4">
+          <AppTextInput v-model="accountModel.name" placeholder="Name" />
+        </div>
+        <div class="text-right">
+          <AppButton type="submit">Save</AppButton>
+        </div>
+      </form>
     </div>
   </AppModal>
 </template>
