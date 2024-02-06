@@ -2,11 +2,11 @@
 import { reactive, ref } from 'vue'
 import { type Account, AccountType } from '@/types/account'
 import { useAccountsStore } from '@/stores/account'
-import AppButton from '@/components/AppButton.vue'
-import AppButtonLink from '@/components/AppButtonLink.vue'
-import AppTextInput from '@/components/AppTextInput.vue'
+import AppButton from '@/components/common/AppButton.vue'
+import AppButtonLink from '@/components/common/AppButtonLink.vue'
+import AppTextInput from '@/components/common/AppTextInput.vue'
 import AccountTypeSelect from '@/components/AccountTypeSelect.vue'
-import AppModal from '@/components/AppModal.vue'
+import AppModal from '@/components/common/AppModal.vue'
 
 const accountsStore = useAccountsStore()
 const accountModel = reactive<Account>({ code: '', type: AccountType.Asset, name: '' })

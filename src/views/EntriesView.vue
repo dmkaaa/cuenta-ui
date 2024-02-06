@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useEntriesStore } from '@/stores/entry'
-import AppModal from '@/components/AppModal.vue'
+import AppModal from '@/components/common/AppModal.vue'
 import AccountSelect from '@/components/AccountSelect.vue'
-import AppButton from '@/components/AppButton.vue'
-import AppButtonLink from '@/components/AppButtonLink.vue'
+import AppButton from '@/components/common/AppButton.vue'
+import AppButtonLink from '@/components/common/AppButtonLink.vue'
 import { ref } from 'vue'
 
 const entriesStore = useEntriesStore()

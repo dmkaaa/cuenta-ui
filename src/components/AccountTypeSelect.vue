@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AccountType } from '@/types/account'
-import AppSelect from '@/components/AppSelect.vue'
+import AppSelect from '@/components/common/AppSelect.vue'
 
 const model = defineModel()
 const options = [AccountType.Asset, AccountType.Liability].map((item) => ({

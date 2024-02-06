@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAccountsStore } from '@/stores/account'
-import AppSelect from '@/components/AppSelect.vue'
+import AppSelect from '@/components/common/AppSelect.vue'
 import { computed } from 'vue'
 
 const model = defineModel()
