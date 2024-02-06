@@ -17,7 +17,12 @@ defineExpose({
     <div
       class="absolute top-1/4 left-0 right-0 w-1/3 mx-auto bg-slate-800 border border-slate-700 rounded-md px-5 py-3"
     >
-      <slot />
+      <h3 class="text-2xl mb-4">
+        <slot name="header"></slot>
+      </h3>
+      <div>
+        <slot />
+      </div>
     </div>
   </Teleport>
 </template>

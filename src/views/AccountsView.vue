@@ -52,8 +52,8 @@ function openForm(account?: Account) {
   </table>
 
   <AppModal ref="modal">
-    <h3 class="text-2xl mb-4">New account</h3>
-    <div>
+    <template #header> New account </template>
+    <template #default>
       <form @submit.prevent="save()">
         <div class="mb-2">
           <AccountTypeSelect v-model="accountModel.type"></AccountTypeSelect>
@@ -68,6 +68,6 @@ function openForm(account?: Account) {
           <AppButton type="submit">Save</AppButton>
         </div>
       </form>
-    </div>
+    </template>
   </AppModal>
 </template>

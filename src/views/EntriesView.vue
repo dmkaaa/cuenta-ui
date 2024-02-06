@@ -41,9 +41,9 @@ const modal = ref<InstanceType<typeof AppModal> | null>(null)
   </table>
 
   <AppModal ref="modal">
-    <h3 class="text-2xl mb-4">New entry</h3>
-    <div>
+    <template #header> New entry </template>
+    <template #default>
       <AccountSelect></AccountSelect>
-    </div>
+    </template>
   </AppModal>
 </template>
