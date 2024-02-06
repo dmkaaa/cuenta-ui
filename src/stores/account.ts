@@ -1,6 +1,6 @@
 import type { Account } from '@/types/account'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const location = 'http://localhost:8080/v1/accounts'
 const defaultHeaders = {
@@ -9,6 +9,13 @@ const defaultHeaders = {
 
 export const useAccountsStore = defineStore('accounts', () => {
   const accounts = ref<Account[]>([])
+
+  function getDisplayName(id: number) {
+    return computed(() => {
+      const account = accounts.value.filter((item) => item.id == id)[0]
+      return account ? account.code + ' - ' + account.name : ''
+    })
+  }
 
   async function load() {
     const response = await fetch(location)
@@ -41,6 +48,7 @@ export const useAccountsStore = defineStore('accounts', () => {
 
   return {
     accounts,
+    getDisplayName,
     save
   }
 })

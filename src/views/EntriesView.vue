@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import { useEntriesStore } from '@/stores/entry'
+import { useAccountsStore } from '@/stores/account'
 import AppModal from '@/components/common/AppModal.vue'
 import AccountSelect from '@/components/AccountSelect.vue'
 import AppButton from '@/components/common/AppButton.vue'
 import AppButtonLink from '@/components/common/AppButtonLink.vue'
-import { ref } from 'vue'
+import AppTextInput from '@/components/common/AppTextInput.vue'
+import { reactive, ref } from 'vue'
+import type { Entry } from '@/types/entry'
 
+const { getDisplayName } = useAccountsStore()
 const entriesStore = useEntriesStore()
+const entryModel = reactive<Entry>({
+  debitAccountId: 0,
+  creditAccountId: 0,
+  amount: '',
+  date: '',
+  description: ''
+})
 
 const modal = ref<InstanceType<typeof AppModal> | null>(null)
+
+function save() {
+  entriesStore.save(entryModel).then(() => modal.value?.close())
+}
 </script>
 
 <template>
@@ -28,8 +43,8 @@ const modal = ref<InstanceType<typeof AppModal> | null>(null)
     </thead>
     <tbody>
       <tr v-for="entry in entriesStore.entries" :key="entry.id">
-        <td class="p-2 pl-0">{{ entry.debitAccount.name }}</td>
-        <td class="p-2">{{ entry.creditAccount.name }}</td>
+        <td class="p-2 pl-0">{{ getDisplayName(entry.debitAccountId).value }}</td>
+        <td class="p-2">{{ getDisplayName(entry.creditAccountId).value }}</td>
         <td class="p-2">{{ entry.amount }}</td>
         <td class="p-2">{{ entry.date }}</td>
         <td class="p-2">{{ entry.description }}</td>
@@ -43,7 +58,26 @@ const modal = ref<InstanceType<typeof AppModal> | null>(null)
   <AppModal ref="modal">
     <template #header> New entry </template>
     <template #default>
-      <AccountSelect></AccountSelect>
+      <form @submit.prevent="save()">
+        <div class="mb-2">
+          <AccountSelect v-model="entryModel.debitAccountId" />
+        </div>
+        <div class="mb-2">
+          <AccountSelect v-model="entryModel.creditAccountId" />
+        </div>
+        <div class="mb-2">
+          <AppTextInput v-model="entryModel.amount" placeholder="Amount" />
+        </div>
+        <div class="mb-2">
+          <AppTextInput v-model="entryModel.date" placeholder="Date" />
+        </div>
+        <div class="mb-4">
+          <AppTextInput v-model="entryModel.description" placeholder="Description" />
+        </div>
+        <div class="text-right">
+          <AppButton type="submit">Save</AppButton>
+        </div>
+      </form>
     </template>
   </AppModal>
 </template>
