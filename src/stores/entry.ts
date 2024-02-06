@@ -29,10 +29,21 @@ export const useEntriesStore = defineStore('entries', () => {
     await load()
   }
 
+  async function remove(id: number) {
+    const response = await fetch(location + '/' + id, { method: 'DELETE' })
+
+    if (!response.ok) {
+      throw new Error('Failed to save entry')
+    }
+
+    entries.value = entries.value.filter((item) => item.id != id)
+  }
+
   load()
 
   return {
     entries,
-    save
+    save,
+    remove
   }
 })

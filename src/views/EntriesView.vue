@@ -24,6 +24,10 @@ const modal = ref<InstanceType<typeof AppModal> | null>(null)
 function save() {
   entriesStore.save(entryModel).then(() => modal.value?.close())
 }
+
+function remove(entry: Entry) {
+  entriesStore.remove(entry.id!)
+}
 </script>
 
 <template>
@@ -50,6 +54,7 @@ function save() {
         <td class="p-2">{{ entry.description }}</td>
         <td class="p-2 pr-0 text-right">
           <AppButtonLink>Edit</AppButtonLink>
+          <AppButtonLink @click="remove(entry)" color="red">Delete</AppButtonLink>
         </td>
       </tr>
     </tbody>

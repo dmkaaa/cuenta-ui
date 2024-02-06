@@ -4,6 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /text-(cyan|red)-(600|700)/,
+      variants: ['hover'],
+    }
+  ],
   theme: {
     extend: {},
   },
