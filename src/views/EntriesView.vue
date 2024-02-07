@@ -8,8 +8,10 @@ import AppButtonLink from '@/components/common/AppButtonLink.vue'
 import AppTextInput from '@/components/common/AppTextInput.vue'
 import { reactive, ref } from 'vue'
 import type { Entry } from '@/types/entry'
+import { useConfirmDialogsStore } from '@/stores/confirmDialog'
 
 const { getDisplayName } = useAccountsStore()
+const confirmDialogsStore = useConfirmDialogsStore()
 const entriesStore = useEntriesStore()
 const entryModel = reactive<Entry>({
   debitAccountId: 0,
@@ -26,7 +28,9 @@ function save() {
 }
 
 function remove(entry: Entry) {
-  entriesStore.remove(entry.id!)
+  confirmDialogsStore.open('Are you sure?', () => {
+    entriesStore.remove(entry.id!)
+  })
 }
 </script>
 
