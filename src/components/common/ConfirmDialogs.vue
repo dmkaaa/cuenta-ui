@@ -7,8 +7,8 @@ import { ref, watch } from 'vue'
 const store = useConfirmDialogsStore()
 const modal = ref<InstanceType<typeof AppModal> | null>(null)
 
-watch(store.isEmpty(), (isEmpty) => {
-  if (!isEmpty) {
+watch(store.length(), (length) => {
+  if (length > 0) {
     modal.value?.open()
   } else {
     modal.value?.close()
@@ -17,7 +17,7 @@ watch(store.isEmpty(), (isEmpty) => {
 </script>
 
 <template>
-  <AppModal ref="modal">
+  <AppModal ref="modal" @close="store.cancelLast()">
     <template #header> Confirmation </template>
     <template #default>
       <div class="mb-4">{{ store.lastText().value }}</div>

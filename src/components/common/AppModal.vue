@@ -1,9 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const emit = defineEmits(['close'])
 const isOpen = ref(false)
-const open = () => (isOpen.value = true)
-const close = () => (isOpen.value = false)
+
+function open() {
+  isOpen.value = true
+}
+
+function close() {
+  if (isOpen.value) {
+    isOpen.value = false
+    emit('close')
+  }
+}
 
 defineExpose({
   open,

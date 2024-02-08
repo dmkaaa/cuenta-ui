@@ -11,7 +11,6 @@ export const useConfirmDialogsStore = defineStore('confirmDialogs', () => {
 
   function open(text: string, ok: () => void) {
     dialogs.value.push({ text, ok })
-    console.log('New', dialogs.value)
   }
 
   function cancelLast() {
@@ -23,11 +22,8 @@ export const useConfirmDialogsStore = defineStore('confirmDialogs', () => {
     last?.ok()
   }
 
-  function isEmpty() {
-    return computed(() => {
-      console.log(dialogs.value.length == 0)
-      return dialogs.value.length == 0
-    })
+  function length() {
+    return computed(() => dialogs.value.length)
   }
 
   function lastText() {
@@ -38,7 +34,7 @@ export const useConfirmDialogsStore = defineStore('confirmDialogs', () => {
     open,
     cancelLast,
     confirmLast,
-    isEmpty,
+    length,
     lastText
   }
 })
