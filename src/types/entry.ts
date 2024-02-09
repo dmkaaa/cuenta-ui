@@ -2,7 +2,7 @@ export interface Entry {
   id?: number
   debitAccountId: number
   creditAccountId: number
-  amount: string
+  amount: number
   date: string
   description: string
 }

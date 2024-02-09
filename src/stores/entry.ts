@@ -16,17 +16,29 @@ export const useEntriesStore = defineStore('entries', () => {
   }
 
   async function save(entry: Entry) {
-    const response = await fetch(location + '/bulk', {
-      method: 'POST',
-      headers: defaultHeaders,
-      body: JSON.stringify([entry])
-    })
+    const response = await (entry.id ? update(entry) : create(entry))
 
     if (!response.ok) {
       throw new Error('Failed to save entry')
     }
 
     await load()
+  }
+
+  async function create(entry: Entry) {
+    return fetch(location + '/bulk', {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify([entry])
+    })
+  }
+
+  async function update(entry: Entry) {
+    return fetch(location + '/' + entry.id, {
+      method: 'PUT',
+      headers: defaultHeaders,
+      body: JSON.stringify(entry)
+    })
   }
 
   async function remove(id: number) {

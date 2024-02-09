@@ -2,10 +2,9 @@
 import { useEntriesStore } from '@/stores/entry'
 import { useAccountsStore } from '@/stores/account'
 import AppModal from '@/components/common/AppModal.vue'
-import AccountSelect from '@/components/account/AccountSelect.vue'
 import AppButton from '@/components/common/AppButton.vue'
 import AppButtonLink from '@/components/common/AppButtonLink.vue'
-import AppTextInput from '@/components/common/AppTextInput.vue'
+import EntryForm from '@/components/entry/EntryForm.vue'
 import { reactive, ref } from 'vue'
 import type { Entry } from '@/types/entry'
 import { useConfirmDialogsStore } from '@/stores/confirmDialog'
@@ -16,7 +15,7 @@ const entriesStore = useEntriesStore()
 const entryModel = reactive<Entry>({
   debitAccountId: 0,
   creditAccountId: 0,
-  amount: '',
+  amount: 0,
   date: '',
   description: ''
 })
@@ -32,11 +31,21 @@ function remove(entry: Entry) {
     entriesStore.remove(entry.id!)
   })
 }
+
+function openForm(entry?: Entry) {
+  entryModel.id = entry?.id
+  entryModel.debitAccountId = entry?.debitAccountId || 0
+  entryModel.creditAccountId = entry?.creditAccountId || 0
+  entryModel.amount = entry?.amount || 0
+  entryModel.date = entry?.date || ''
+  entryModel.description = entry?.description || ''
+  modal.value?.open()
+}
 </script>
 
 <template>
   <div class="text-end">
-    <AppButton @click="modal?.open()">Add</AppButton>
+    <AppButton @click="openForm()">Add</AppButton>
   </div>
   <table class="table-fixed w-full">
     <thead>
@@ -57,7 +66,7 @@ function remove(entry: Entry) {
         <td class="p-2">{{ entry.date }}</td>
         <td class="p-2">{{ entry.description }}</td>
         <td class="p-2 pr-0 text-right">
-          <AppButtonLink>Edit</AppButtonLink>
+          <AppButtonLink @click="openForm(entry)">Edit</AppButtonLink>
           <AppButtonLink @click="remove(entry)" color="red">Delete</AppButtonLink>
         </td>
       </tr>
@@ -65,28 +74,16 @@ function remove(entry: Entry) {
   </table>
 
   <AppModal ref="modal">
-    <template #header> New entry </template>
+    <template #header> {{ entryModel.id ? 'Edit entry' : 'New entry' }} </template>
     <template #default>
-      <form @submit.prevent="save()">
-        <div class="mb-2">
-          <AccountSelect v-model="entryModel.debitAccountId" />
-        </div>
-        <div class="mb-2">
-          <AccountSelect v-model="entryModel.creditAccountId" />
-        </div>
-        <div class="mb-2">
-          <AppTextInput v-model="entryModel.amount" placeholder="Amount" />
-        </div>
-        <div class="mb-2">
-          <AppTextInput v-model="entryModel.date" placeholder="Date" />
-        </div>
-        <div class="mb-4">
-          <AppTextInput v-model="entryModel.description" placeholder="Description" />
-        </div>
-        <div class="text-right">
-          <AppButton type="submit">Save</AppButton>
-        </div>
-      </form>
+      <EntryForm
+        @submit.prevent="save()"
+        v-model:debit-account-id="entryModel.debitAccountId"
+        v-model:credit-account-id="entryModel.creditAccountId"
+        v-model:amount="entryModel.amount"
+        v-model:date="entryModel.date"
+        v-model:description="entryModel.description"
+      />
     </template>
   </AppModal>
 </template>

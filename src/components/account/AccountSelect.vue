@@ -8,7 +8,7 @@ const model = defineModel()
 const accountsStore = useAccountsStore()
 const options = computed(() =>
   accountsStore.accounts.map((item) => ({
-    value: item.id!.toString(),
+    value: item.id!,
     name: item.code + ' - ' + item.name
   }))
 )

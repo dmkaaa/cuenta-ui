@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type Option = {
-  value: string
+  value: string | number
   name: string
 }
 
