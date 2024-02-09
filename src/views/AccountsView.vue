@@ -4,9 +4,8 @@ import { type Account, AccountType } from '@/types/account'
 import { useAccountsStore } from '@/stores/account'
 import AppButton from '@/components/common/AppButton.vue'
 import AppButtonLink from '@/components/common/AppButtonLink.vue'
-import AppTextInput from '@/components/common/AppTextInput.vue'
-import AccountTypeSelect from '@/components/AccountTypeSelect.vue'
 import AppModal from '@/components/common/AppModal.vue'
+import AccountForm from '@/components/account/AccountForm.vue'
 
 const accountsStore = useAccountsStore()
 const accountModel = reactive<Account>({ code: '', type: AccountType.Asset, name: '' })
@@ -52,22 +51,14 @@ function openForm(account?: Account) {
   </table>
 
   <AppModal ref="modal">
-    <template #header> New account </template>
+    <template #header> {{ accountModel.id ? 'Edit account' : 'New account' }} </template>
     <template #default>
-      <form @submit.prevent="save()">
-        <div class="mb-2">
-          <AccountTypeSelect v-model="accountModel.type"></AccountTypeSelect>
-        </div>
-        <div class="mb-2">
-          <AppTextInput v-model="accountModel.code" placeholder="Code" />
-        </div>
-        <div class="mb-4">
-          <AppTextInput v-model="accountModel.name" placeholder="Name" />
-        </div>
-        <div class="text-right">
-          <AppButton type="submit">Save</AppButton>
-        </div>
-      </form>
+      <AccountForm
+        @submit.prevent="save()"
+        v-model:type="accountModel.type"
+        v-model:code="accountModel.code"
+        v-model:name="accountModel.name"
+      />
     </template>
   </AppModal>
 </template>

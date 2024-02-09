@@ -2,7 +2,7 @@
 import { useEntriesStore } from '@/stores/entry'
 import { useAccountsStore } from '@/stores/account'
 import AppModal from '@/components/common/AppModal.vue'
-import AccountSelect from '@/components/AccountSelect.vue'
+import AccountSelect from '@/components/account/AccountSelect.vue'
 import AppButton from '@/components/common/AppButton.vue'
 import AppButtonLink from '@/components/common/AppButtonLink.vue'
 import AppTextInput from '@/components/common/AppTextInput.vue'
