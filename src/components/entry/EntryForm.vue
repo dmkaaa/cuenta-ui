@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppButton from '@/components/common/AppButton.vue'
-import AppTextInput from '@/components/common/AppTextInput.vue'
+import AppInput from '@/components/common/AppInput.vue'
 import AccountSelect from '@/components/account/AccountSelect.vue'
 
 const debitAccountIdModel = defineModel<number>('debitAccountId')
@@ -19,13 +19,13 @@ const descriptionModel = defineModel<string>('description')
       <AccountSelect v-model="creditAccountIdModel" />
     </div>
     <div class="mb-2">
-      <AppTextInput v-model="amountModel" placeholder="Amount" />
+      <AppInput v-model="amountModel" placeholder="Amount" type="number" min="0.01" step="0.01" />
     </div>
     <div class="mb-2">
-      <AppTextInput v-model="dateModel" placeholder="Date" />
+      <AppInput v-model="dateModel" placeholder="Date" type="date" />
     </div>
     <div class="mb-4">
-      <AppTextInput v-model="descriptionModel" placeholder="Description" />
+      <AppInput v-model="descriptionModel" placeholder="Description" />
     </div>
     <div class="text-right">
       <AppButton type="submit">Save</AppButton>

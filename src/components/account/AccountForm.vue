@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppTextInput from '@/components/common/AppTextInput.vue'
+import AppInput from '@/components/common/AppInput.vue'
 import AccountTypeSelect from './AccountTypeSelect.vue'
 import AppButton from '@/components/common/AppButton.vue'
 import type { AccountType } from '@/types/account'
@@ -15,10 +15,10 @@ const nameModel = defineModel<string>('name')
       <AccountTypeSelect v-model="typeModel"></AccountTypeSelect>
     </div>
     <div class="mb-2">
-      <AppTextInput v-model="codeModel" placeholder="Code" />
+      <AppInput v-model="codeModel" placeholder="Code" />
     </div>
     <div class="mb-4">
-      <AppTextInput v-model="nameModel" placeholder="Name" />
+      <AppInput v-model="nameModel" placeholder="Name" />
     </div>
     <div class="text-right">
       <AppButton type="submit">Save</AppButton>

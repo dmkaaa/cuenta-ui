@@ -41,6 +41,10 @@ function openForm(entry?: Entry) {
   entryModel.description = entry?.description || ''
   modal.value?.open()
 }
+
+function formatDate(isoDate: string) {
+  return isoDate.split('-').reverse().join('.')
+}
 </script>
 
 <template>
@@ -63,7 +67,7 @@ function openForm(entry?: Entry) {
         <td class="p-2 pl-0">{{ getDisplayName(entry.debitAccountId).value }}</td>
         <td class="p-2">{{ getDisplayName(entry.creditAccountId).value }}</td>
         <td class="p-2">{{ entry.amount }}</td>
-        <td class="p-2">{{ entry.date }}</td>
+        <td class="p-2">{{ formatDate(entry.date) }}</td>
         <td class="p-2">{{ entry.description }}</td>
         <td class="p-2 pr-0 text-right">
           <AppButtonLink @click="openForm(entry)">Edit</AppButtonLink>
