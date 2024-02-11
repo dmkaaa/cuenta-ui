@@ -19,7 +19,9 @@ export const useEntriesStore = defineStore('entries', () => {
     const response = await (entry.id ? update(entry) : create(entry))
 
     if (!response.ok) {
-      throw new Error('Failed to save entry')
+      const defaultMessage = 'Failed to save entry'
+      const body = await response.json()
+      throw new Error(body?.message || defaultMessage)
     }
 
     await load()

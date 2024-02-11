@@ -6,14 +6,19 @@ import AppButton from '@/components/common/AppButton.vue'
 import AppButtonLink from '@/components/common/AppButtonLink.vue'
 import AppModal from '@/components/common/AppModal.vue'
 import AccountForm from '@/components/account/AccountForm.vue'
+import ErrorMessage from '@/components/common/ErrorMessage.vue'
 
 const accountsStore = useAccountsStore()
 const accountModel = reactive<Account>({ code: '', type: AccountType.Asset, name: '' })
 
 const modal = ref<InstanceType<typeof AppModal> | null>(null)
+const errorMessage = ref('')
 
 function save() {
-  accountsStore.save(accountModel).then(() => modal.value?.close())
+  accountsStore
+    .save(accountModel)
+    .then(() => modal.value?.close())
+    .catch((err) => (errorMessage.value = err.message))
 }
 
 function openForm(account?: Account) {
@@ -53,6 +58,7 @@ function openForm(account?: Account) {
   <AppModal ref="modal">
     <template #header> {{ accountModel.id ? 'Edit account' : 'New account' }} </template>
     <template #default>
+      <ErrorMessage :message="errorMessage" class="mb-3" />
       <AccountForm
         @submit.prevent="save()"
         v-model:type="accountModel.type"

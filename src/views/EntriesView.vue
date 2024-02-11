@@ -4,6 +4,7 @@ import { useAccountsStore } from '@/stores/account'
 import AppModal from '@/components/common/AppModal.vue'
 import AppButton from '@/components/common/AppButton.vue'
 import AppButtonLink from '@/components/common/AppButtonLink.vue'
+import ErrorMessage from '@/components/common/ErrorMessage.vue'
 import EntryForm from '@/components/entry/EntryForm.vue'
 import { reactive, ref } from 'vue'
 import type { Entry } from '@/types/entry'
@@ -21,9 +22,13 @@ const entryModel = reactive<Entry>({
 })
 
 const modal = ref<InstanceType<typeof AppModal> | null>(null)
+const errorMessage = ref('')
 
 function save() {
-  entriesStore.save(entryModel).then(() => modal.value?.close())
+  entriesStore
+    .save(entryModel)
+    .then(() => modal.value?.close())
+    .catch((err) => (errorMessage.value = err.message))
 }
 
 function remove(entry: Entry) {
@@ -36,7 +41,7 @@ function openForm(entry?: Entry) {
   entryModel.id = entry?.id
   entryModel.debitAccountId = entry?.debitAccountId || 0
   entryModel.creditAccountId = entry?.creditAccountId || 0
-  entryModel.amount = entry?.amount || 0
+  entryModel.amount = entry?.amount || 0.01
   entryModel.date = entry?.date || ''
   entryModel.description = entry?.description || ''
   modal.value?.open()
@@ -80,6 +85,7 @@ function formatDate(isoDate: string) {
   <AppModal ref="modal">
     <template #header> {{ entryModel.id ? 'Edit entry' : 'New entry' }} </template>
     <template #default>
+      <ErrorMessage :message="errorMessage" class="mb-3" />
       <EntryForm
         @submit.prevent="save()"
         v-model:debit-account-id="entryModel.debitAccountId"

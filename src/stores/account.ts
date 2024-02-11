@@ -38,7 +38,9 @@ export const useAccountsStore = defineStore('accounts', () => {
     })
 
     if (!response.ok) {
-      throw new Error('Failed to save account')
+      const defaultMessage = 'Failed to save account'
+      const body = await response.json()
+      throw new Error(body?.message || defaultMessage)
     }
 
     await load()
