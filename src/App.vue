@@ -16,6 +16,9 @@ import ConfirmDialogs from '@/components/common/ConfirmDialogs.vue'
           <RouterLink class="mx-3 text-slate-400 hover:text-slate-200" to="/entries">
             Entries
           </RouterLink>
+          <RouterLink class="mx-3 text-slate-400 hover:text-slate-200" to="/ledger">
+            Ledger
+          </RouterLink>
         </div>
       </div>
     </div>

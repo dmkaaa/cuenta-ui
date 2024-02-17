@@ -34,21 +34,21 @@ function openForm(account?: Account) {
   <div class="text-end">
     <AppButton @click="openForm()">Add</AppButton>
   </div>
-  <table class="table-fixed w-full">
+  <table>
     <thead>
-      <tr class="text-slate-400 text-left border-b border-slate-700">
-        <th class="font-medium p-2 pl-0">Type</th>
-        <th class="font-medium p-2">Code</th>
-        <th class="font-medium p-2">Name</th>
+      <tr>
+        <th>Type</th>
+        <th>Code</th>
+        <th>Name</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="account in accountsStore.accounts" :key="account.id">
-        <td class="p-2 pl-0">{{ account.type }}</td>
-        <td class="p-2">{{ account.code }}</td>
-        <td class="p-2">{{ account.name }}</td>
-        <td class="p-2 pr-0 text-right">
+        <td>{{ account.type }}</td>
+        <td>{{ account.code }}</td>
+        <td>{{ account.name }}</td>
+        <td class="text-right">
           <AppButtonLink @click="openForm(account)">Edit</AppButtonLink>
         </td>
       </tr>
