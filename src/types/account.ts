@@ -7,5 +7,7 @@ export interface Account {
 
 export enum AccountType {
   Asset = 'ASSET',
-  Liability = 'LIABILITY'
+  Liability = 'LIABILITY',
+  Revenue = 'REVENUE',
+  Expense = 'EXPENSE'
 }
