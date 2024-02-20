@@ -3,7 +3,12 @@ import { AccountType } from '@/types/account'
 import AppSelect from '@/components/common/AppSelect.vue'
 
 const model = defineModel()
-const options = [AccountType.Asset, AccountType.Liability].map((item) => ({
+const options = [
+  AccountType.Asset,
+  AccountType.Liability,
+  AccountType.Revenue,
+  AccountType.Expense
+].map((item) => ({
   value: item,
   name: item
 }))

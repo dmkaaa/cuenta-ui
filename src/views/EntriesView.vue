@@ -9,6 +9,8 @@ import EntryForm from '@/components/entry/EntryForm.vue'
 import { reactive, ref } from 'vue'
 import type { Entry } from '@/types/entry'
 import { useConfirmDialogsStore } from '@/stores/confirmDialog'
+import { formatIsoDate } from '@/util/date'
+import { formatMoney } from '@/util/number'
 
 const { getDisplayName } = useAccountsStore()
 const confirmDialogsStore = useConfirmDialogsStore()
@@ -46,10 +48,6 @@ function openForm(entry?: Entry) {
   entryModel.description = entry?.description || ''
   modal.value?.open()
 }
-
-function formatDate(isoDate: string) {
-  return isoDate.split('-').reverse().join('.')
-}
 </script>
 
 <template>
@@ -59,10 +57,10 @@ function formatDate(isoDate: string) {
   <table>
     <thead>
       <tr>
-        <th>Debit</th>
-        <th>Credit</th>
-        <th>Amount</th>
-        <th>Date</th>
+        <th class="w-1/4">Debit</th>
+        <th class="w-1/4">Credit</th>
+        <th class="text-right w-1/12">Amount</th>
+        <th class="text-center w-1/12">Date</th>
         <th>Description</th>
         <th></th>
       </tr>
@@ -71,8 +69,8 @@ function formatDate(isoDate: string) {
       <tr v-for="entry in entriesStore.entries" :key="entry.id">
         <td>{{ getDisplayName(entry.debitAccountId).value }}</td>
         <td>{{ getDisplayName(entry.creditAccountId).value }}</td>
-        <td>{{ entry.amount }}</td>
-        <td>{{ formatDate(entry.date) }}</td>
+        <td class="text-right">{{ formatMoney(entry.amount) }}</td>
+        <td class="text-center">{{ formatIsoDate(entry.date) }}</td>
         <td class="break-words">{{ entry.description }}</td>
         <td class="text-right">
           <AppButtonLink @click="openForm(entry)">Edit</AppButtonLink>
