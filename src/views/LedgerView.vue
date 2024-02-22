@@ -3,12 +3,16 @@ import { useAccountsStore } from '@/stores/account'
 import { useLedgerStore } from '@/stores/ledger'
 import { formatIsoDate } from '@/util/date'
 import { formatMoney } from '@/util/number'
+import PeriodSelection from '@/components/ledger/PeriodSelection.vue'
 
 const ledgerStore = useLedgerStore()
 const { getDisplayName } = useAccountsStore()
 </script>
 
 <template>
+  <div class="mb-5">
+    <PeriodSelection @select="ledgerStore.load" />
+  </div>
   <div v-for="subLedger in ledgerStore.ledger?.subLedgers" :key="subLedger.accountId" class="mb-5">
     <h3 class="text-lg font-normal mb-2">{{ getDisplayName(subLedger.accountId).value }}</h3>
     <table>

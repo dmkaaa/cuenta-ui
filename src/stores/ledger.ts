@@ -7,14 +7,13 @@ const location = 'http://localhost:8080/v1/ledger'
 export const useLedgerStore = defineStore('ledger', () => {
   const ledger = ref<Ledger>()
 
-  async function load() {
-    const response = await fetch(location)
+  async function load(periodStart: string, periodEnd: string) {
+    const response = await fetch(location + '?' + new URLSearchParams({ periodStart, periodEnd }))
     ledger.value = await response.json()
   }
 
-  load()
-
   return {
-    ledger
+    ledger,
+    load
   }
 })
