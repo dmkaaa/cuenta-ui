@@ -8,6 +8,8 @@ export interface Account {
 export enum AccountType {
   Asset = 'ASSET',
   Liability = 'LIABILITY',
+  Equity = 'EQUITY',
   Revenue = 'REVENUE',
-  Expense = 'EXPENSE'
+  Expense = 'EXPENSE',
+  Income = 'INCOME'
 }

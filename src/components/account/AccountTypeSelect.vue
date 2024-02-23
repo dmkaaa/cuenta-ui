@@ -6,8 +6,10 @@ const model = defineModel()
 const options = [
   AccountType.Asset,
   AccountType.Liability,
+  AccountType.Equity,
   AccountType.Revenue,
-  AccountType.Expense
+  AccountType.Expense,
+  AccountType.Income
 ].map((item) => ({
   value: item,
   name: item

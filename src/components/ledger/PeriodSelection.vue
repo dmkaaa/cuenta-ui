@@ -10,7 +10,8 @@ const emit = defineEmits<{
 }>()
 
 const currentYear = new Date().getFullYear()
-const years = range(currentYear - 4, currentYear)
+const numberOfYears = 7;
+const years = range(currentYear - numberOfYears, currentYear)
 
 const startModel = ref('')
 const endModel = ref('')
