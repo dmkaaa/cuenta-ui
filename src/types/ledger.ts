@@ -1,3 +1,4 @@
+import type { AccountBalance } from './accountBalance'
 import type { Entry } from './entry'
 
 export interface Ledger {
@@ -6,9 +7,8 @@ export interface Ledger {
 
 interface SubLedger {
   accountId: number
-  openingBalance: number
-  closingBalance: number
+  openingBalance: AccountBalance
+  balance: AccountBalance
+  closingBalance: AccountBalance
   entries: Entry[]
-  totalDebit: number
-  totalCredit: number
 }

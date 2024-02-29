@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import AccountsView from '@/views/AccountsView.vue'
 import EntriesView from '@/views/EntriesView.vue'
 import LedgerView from '@/views/LedgerView.vue'
+import BalanceSheetView from '@/views/BalanceSheetView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/ledger',
       name: 'ledger',
       component: LedgerView
+    },
+    {
+      path: '/balance-sheet',
+      name: 'balance-sheet',
+      component: BalanceSheetView
     }
   ]
 })

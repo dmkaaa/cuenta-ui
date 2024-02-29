@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <button
-    class="font-medium mx-2 last:me-0"
+    class="font-medium mx-2 last:me-0 first:ms-0"
     :class="['text-' + props.color + '-700', 'hover:text-' + props.color + '-600']"
     type="button"
   >

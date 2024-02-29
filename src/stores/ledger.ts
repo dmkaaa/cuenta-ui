@@ -2,7 +2,7 @@ import type { Ledger } from '@/types/ledger'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-const location = 'http://localhost:8080/v1/ledger'
+const location = 'http://localhost:8080/v1/reports/ledger'
 
 export const useLedgerStore = defineStore('ledger', () => {
   const ledger = ref<Ledger>()

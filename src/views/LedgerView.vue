@@ -30,7 +30,7 @@ const { getDisplayName } = useAccountsStore()
           <td>Opening balance</td>
           <td></td>
           <td class="text-right font-semibold">
-            {{ formatMoney(subLedger.openingBalance) }}
+            {{ formatMoney(subLedger.openingBalance.value) }}
           </td>
         </tr>
         <tr v-for="entry in subLedger.entries" :key="entry.id" class="hover:bg-slate-700">
@@ -46,15 +46,15 @@ const { getDisplayName } = useAccountsStore()
         <tr class="hover:bg-slate-700">
           <td></td>
           <td>Total</td>
-          <td class="text-right">{{ formatMoney(subLedger.totalDebit) }}</td>
-          <td class="text-right">{{ formatMoney(subLedger.totalCredit) }}</td>
+          <td class="text-right">{{ formatMoney(subLedger.balance.debit) }}</td>
+          <td class="text-right">{{ formatMoney(subLedger.balance.credit) }}</td>
         </tr>
         <tr class="hover:bg-slate-700">
           <td></td>
           <td>Closing balance</td>
           <td></td>
           <td class="text-right font-semibold">
-            {{ formatMoney(subLedger.closingBalance) }}
+            {{ formatMoney(subLedger.closingBalance.value) }}
           </td>
         </tr>
       </tbody>

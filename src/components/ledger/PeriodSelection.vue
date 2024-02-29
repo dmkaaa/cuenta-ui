@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import AppButton from '@/components/common/AppButton.vue'
-import AppButtonLink from '@/components/common/AppButtonLink.vue'
+import YearOptions from '@/components/common/YearOptions.vue'
 import AppInput from '@/components/common/AppInput.vue'
-import { range } from '@/util/number'
 
 const emit = defineEmits<{
   select: [start: string, end: string]
 }>()
-
-const currentYear = new Date().getFullYear()
-const numberOfYears = 7;
-const years = range(currentYear - numberOfYears, currentYear)
 
 const startModel = ref('')
 const endModel = ref('')
@@ -26,7 +21,7 @@ function submit() {
   emit('select', startModel.value, endModel.value)
 }
 
-selectYear(currentYear)
+selectYear(new Date().getFullYear())
 </script>
 
 <template>
@@ -42,8 +37,6 @@ selectYear(currentYear)
     </div>
   </div>
   <div>
-    <AppButtonLink v-for="year in years" :key="year" @click="selectYear(year)" class="mx-1 text-sm">
-      {{ year }}
-    </AppButtonLink>
+    <YearOptions @select="selectYear" class="text-sm" />
   </div>
 </template>
