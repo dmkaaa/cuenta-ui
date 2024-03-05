@@ -4,7 +4,7 @@ type Option = {
   name: string
 }
 
-const model = defineModel()
+const model = defineModel<string | number | undefined>()
 const props = defineProps<{
   options: Option[]
 }>()
@@ -15,6 +15,7 @@ const props = defineProps<{
     class="rounded px-2 py-1 border border-slate-600 bg-slate-700 text-slate-200 w-full"
     v-model="model"
   >
+    <option :value="undefined" disabled hidden>Select your option</option>
     <option v-for="option in props.options" :key="option.value" :value="option.value">
       {{ option.name }}
     </option>

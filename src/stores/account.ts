@@ -10,9 +10,9 @@ const defaultHeaders = {
 export const useAccountsStore = defineStore('accounts', () => {
   const accounts = ref<Account[]>([])
 
-  function getDisplayName(id: number) {
+  function getDisplayName(id?: number) {
     return computed(() => {
-      const account = accounts.value.filter((item) => item.id == id)[0]
+      const account = accounts.value.filter((item) => item.id === id)[0]
       return account ? account.code + ' - ' + account.name : ''
     })
   }

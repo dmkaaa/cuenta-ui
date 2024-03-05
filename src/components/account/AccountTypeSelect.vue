@@ -2,7 +2,7 @@
 import { AccountType } from '@/types/account'
 import AppSelect from '@/components/common/AppSelect.vue'
 
-const model = defineModel()
+const model = defineModel<string>()
 const options = [
   AccountType.Asset,
   AccountType.Liability,

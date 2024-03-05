@@ -3,7 +3,7 @@ import { useAccountsStore } from '@/stores/account'
 import AppSelect from '@/components/common/AppSelect.vue'
 import { computed } from 'vue'
 
-const model = defineModel()
+const model = defineModel<number | undefined>()
 
 const accountsStore = useAccountsStore()
 const options = computed(() =>

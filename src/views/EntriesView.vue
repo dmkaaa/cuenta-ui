@@ -16,8 +16,6 @@ const { getDisplayName } = useAccountsStore()
 const confirmDialogsStore = useConfirmDialogsStore()
 const entriesStore = useEntriesStore()
 const entryModel = reactive<Entry>({
-  debitAccountId: 0,
-  creditAccountId: 0,
   amount: 0,
   date: '',
   description: ''
@@ -41,8 +39,8 @@ function remove(entry: Entry) {
 
 function openForm(entry?: Entry) {
   entryModel.id = entry?.id
-  entryModel.debitAccountId = entry?.debitAccountId || 0
-  entryModel.creditAccountId = entry?.creditAccountId || 0
+  entryModel.debitAccountId = entry?.debitAccountId
+  entryModel.creditAccountId = entry?.creditAccountId
   entryModel.amount = entry?.amount || 0.01
   entryModel.date = entry?.date || ''
   entryModel.description = entry?.description || ''
