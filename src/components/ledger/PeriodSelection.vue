@@ -1,36 +1,44 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import AppButton from '@/components/common/AppButton.vue'
 import YearOptions from '@/components/common/YearOptions.vue'
-import AppInput from '@/components/common/AppInput.vue'
+import DateInput from '@/components/common/DateInput.vue'
+import type { Period } from '@/util/date'
 
 const emit = defineEmits<{
-  select: [start: string, end: string]
+  select: [period: Period]
 }>()
 
-const startModel = ref('')
-const endModel = ref('')
+const period = reactive<Period>(initState())
+
+function initState(): Period {
+  const currentYear = new Date().getFullYear()
+  return {
+    start: currentYear + '-01-01',
+    end: currentYear + '-12-31'
+  }
+}
 
 function selectYear(year: number) {
-  startModel.value = year + '-01-01'
-  endModel.value = year + '-12-31'
+  period.start = year + '-01-01'
+  period.end = year + '-12-31'
   submit()
 }
 
 function submit() {
-  emit('select', startModel.value, endModel.value)
+  emit('select', { ...period })
 }
 
-selectYear(new Date().getFullYear())
+submit()
 </script>
 
 <template>
   <div class="flex align-center">
     <div>
-      <AppInput type="date" placeholder="Period start" v-model="startModel"></AppInput>
+      <DateInput placeholder="Period start (dd.mm.yyyy)" v-model="period.start" />
     </div>
     <div class="mx-2">
-      <AppInput type="date" placeholder="Period end" v-model="endModel"></AppInput>
+      <DateInput placeholder="Period end (dd.mm.yyyy)" v-model="period.end" />
     </div>
     <div>
       <AppButton @click="submit()">Generate</AppButton>
