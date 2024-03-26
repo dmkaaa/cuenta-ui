@@ -33,7 +33,7 @@ function toModelValue(str: string): string | undefined {
 
   if (re.test(str)) {
     const parts = str.split('.')
-    const transformed = parts.toReversed().join('-')
+    const transformed = [...parts].reverse().join('-')
     const date = new Date(transformed)
     const isValid =
       date.getDate() === parseInt(parts[0], 10) &&
@@ -51,7 +51,7 @@ function toDisplayValue(str?: string): string {
 
   if (str && re.test(str)) {
     const parts = str.split('-')
-    const transformed = parts.toReversed().join('.')
+    const transformed = [...parts].reverse().join('.')
     const date = new Date(str)
     const isValid =
       date.getDate() === parseInt(parts[2], 10) &&

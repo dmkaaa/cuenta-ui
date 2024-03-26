@@ -2,6 +2,7 @@
 import AppButton from '@/components/common/AppButton.vue'
 import AppInput from '@/components/common/AppInput.vue'
 import AccountSelect from '@/components/account/AccountSelect.vue'
+import DateInput from '../common/DateInput.vue'
 
 const debitAccountIdModel = defineModel<number>('debitAccountId')
 const creditAccountIdModel = defineModel<number>('creditAccountId')
@@ -22,7 +23,7 @@ const descriptionModel = defineModel<string>('description')
       <AppInput v-model="amountModel" placeholder="Amount" type="number" min="0.01" step="0.01" />
     </div>
     <div class="mb-2">
-      <AppInput v-model="dateModel" placeholder="Date" type="date" />
+      <DateInput v-model="dateModel" placeholder="Date (dd.mm.yyyy)" />
     </div>
     <div class="mb-4">
       <AppInput v-model="descriptionModel" placeholder="Description" />
