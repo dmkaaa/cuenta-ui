@@ -9,9 +9,7 @@ export const useLedgerStore = defineStore('ledger', () => {
   const ledger = ref<Ledger>()
 
   async function load(period: Period) {
-    const response = await fetch(
-      location + '?' + new URLSearchParams({ periodStart: period.start, periodEnd: period.end })
-    )
+    const response = await fetch(location + '?' + new URLSearchParams({ ...period }))
     ledger.value = await response.json()
   }
 

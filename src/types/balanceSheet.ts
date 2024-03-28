@@ -1,11 +1,12 @@
 import type { AccountBalance } from './accountBalance'
 
 export interface BalanceSheet {
+  date: string
   activus: BalanceSheetSide
   passivus: BalanceSheetSide
 }
 
-interface BalanceSheetSide {
+export interface BalanceSheetSide {
   rows: BalanceSheetRow[]
   total: number
 }
