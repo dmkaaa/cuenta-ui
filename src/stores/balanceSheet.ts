@@ -1,15 +1,15 @@
 import type { BalanceSheet } from '@/types/balanceSheet'
+import { apiFetch } from '@/util/fetch'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-const location = 'http://localhost:8080/v1/reports/balance-sheet'
 
 export const useBalanceSheetStore = defineStore('balance-sheet', () => {
   const balanceSheet = ref<BalanceSheet>()
 
-  async function load(date: string) {
-    const response = await fetch(location + '?' + new URLSearchParams({ date }))
-    balanceSheet.value = await response.json()
+  function load(date: string) {
+    apiFetch<BalanceSheet>('/reports/balance-sheet?' + new URLSearchParams({ date })).then(
+      (result) => (balanceSheet.value = result)
+    )
   }
 
   return {

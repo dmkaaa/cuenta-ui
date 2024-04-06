@@ -22,6 +22,7 @@ function save() {
 }
 
 function openForm(account?: Account) {
+  errorMessage.value = ''
   accountModel.id = account?.id
   accountModel.type = account?.type || AccountType.Asset
   accountModel.code = account?.code || ''

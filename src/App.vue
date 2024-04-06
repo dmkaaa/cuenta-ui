@@ -34,4 +34,8 @@ import ConfirmDialogs from '@/components/common/ConfirmDialogs.vue'
   <ConfirmDialogs />
 </template>
 
-<style scoped></style>
+<style lang="postcss" scoped>
+.router-link-active {
+  @apply text-slate-200;
+}
+</style>

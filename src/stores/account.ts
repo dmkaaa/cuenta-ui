@@ -1,8 +1,8 @@
 import type { Account } from '@/types/account'
+import { apiFetch } from '@/util/fetch'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-const location = 'http://localhost:8080/v1/accounts'
 const defaultHeaders = {
   'Content-Type': 'application/json'
 }
@@ -17,33 +17,18 @@ export const useAccountsStore = defineStore('accounts', () => {
     })
   }
 
-  async function load() {
-    const response = await fetch(location)
-    accounts.value = await response.json()
+  function load() {
+    apiFetch<Account[]>('/accounts').then((result) => (accounts.value = result || []))
   }
 
-  async function save(account: Account) {
-    let url = location
-    let method = 'POST'
-
-    if (account.id) {
-      url = location + '/' + account.id
-      method = 'PUT'
-    }
-
-    const response = await fetch(url, {
+  function save(account: Account) {
+    const path = account.id ? `/accounts/${account.id}` : '/accounts'
+    const method = account.id ? 'PUT' : 'POST'
+    return apiFetch(path, {
       method,
       headers: defaultHeaders,
       body: JSON.stringify(account)
-    })
-
-    if (!response.ok) {
-      const defaultMessage = 'Failed to save account'
-      const body = await response.json()
-      throw new Error(body?.message || defaultMessage)
-    }
-
-    await load()
+    }).then(() => load())
   }
 
   load()
