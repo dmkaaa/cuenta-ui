@@ -5,7 +5,7 @@ type Option = {
 }
 
 const model = defineModel<string | number | undefined>()
-const props = defineProps<{
+defineProps<{
   options: Option[]
 }>()
 </script>
@@ -16,7 +16,7 @@ const props = defineProps<{
     v-model="model"
   >
     <option :value="undefined" disabled hidden>Select your option</option>
-    <option v-for="option in props.options" :key="option.value" :value="option.value">
+    <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.name }}
     </option>
   </select>

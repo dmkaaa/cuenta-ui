@@ -3,7 +3,7 @@ interface Props {
   color?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   color: 'cyan'
 })
 </script>
@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
 <template>
   <button
     class="font-medium mx-2 last:me-0 first:ms-0"
-    :class="['text-' + props.color + '-700', 'hover:text-' + props.color + '-600']"
+    :class="['text-' + color + '-700', 'hover:text-' + color + '-600']"
     type="button"
   >
     <slot />

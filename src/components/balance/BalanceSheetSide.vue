@@ -3,7 +3,7 @@ import type { BalanceSheetSide } from '@/types/balanceSheet'
 import { useAccountsStore } from '@/stores/account'
 import { formatMoney } from '@/util/number'
 
-const props = defineProps<{
+defineProps<{
   name: string
   side: BalanceSheetSide
 }>()
@@ -13,10 +13,10 @@ const { getDisplayName } = useAccountsStore()
 <template>
   <div>
     <h3 class="text-lg text-center font-normal mb-5">
-      {{ props.name }}
+      {{ name }}
     </h3>
 
-    <div v-for="row in props.side.rows" :key="row.accountId" class="flex justify-between">
+    <div v-for="row in side.rows" :key="row.accountId" class="flex justify-between">
       <div>
         {{ getDisplayName(row.accountId).value }}
       </div>
