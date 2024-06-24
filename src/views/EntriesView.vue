@@ -21,13 +21,18 @@ const entryModel = reactive<Entry>({
   description: ''
 })
 
-const modal = ref<InstanceType<typeof AppModal> | null>(null)
+const modal = ref<InstanceType<typeof AppModal> | undefined>()
 const errorMessage = ref('')
 
-function save() {
+function save(close = false) {
   entriesStore
     .save(entryModel)
-    .then(() => modal.value?.close())
+    .then(() => {
+      entryModel.id = undefined
+      if (close) {
+        modal.value?.close()
+      }
+    })
     .catch((err) => (errorMessage.value = err.message))
 }
 
@@ -89,7 +94,10 @@ function openForm(entry?: Entry) {
         v-model:amount="entryModel.amount"
         v-model:date="entryModel.date"
         v-model:description="entryModel.description"
-      />
+      >
+        <AppButton type="button" @click="save(true)">Save</AppButton>
+        <AppButton type="submit" class="ml-1">Save &amp; repeat</AppButton>
+      </EntryForm>
     </template>
   </AppModal>
 </template>

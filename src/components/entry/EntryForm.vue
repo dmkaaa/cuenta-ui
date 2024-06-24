@@ -20,7 +20,7 @@ const descriptionModel = defineModel<string>('description')
       <AccountSelect v-model="creditAccountIdModel" />
     </div>
     <div class="mb-2">
-      <AppInput v-model="amountModel" placeholder="Amount" type="number" min="0.01" step="0.01" />
+      <AppInput v-model="amountModel" placeholder="Amount" type="number" step="0.01" />
     </div>
     <div class="mb-2">
       <DateInput v-model="dateModel" placeholder="Date (dd.mm.yyyy)" />
@@ -29,7 +29,7 @@ const descriptionModel = defineModel<string>('description')
       <AppInput v-model="descriptionModel" placeholder="Description" />
     </div>
     <div class="text-right">
-      <AppButton type="submit">Save</AppButton>
+      <slot></slot>
     </div>
   </form>
 </template>

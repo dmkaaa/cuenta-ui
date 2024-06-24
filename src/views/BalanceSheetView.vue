@@ -41,7 +41,7 @@ selectYear(new Date().getFullYear())
         {{ formatMoney(balanceSheet.activus.total) }}
       </div>
       <div class="w-1/2 px-2 text-right font-semibold">
-        {{ formatMoney(balanceSheet.activus.total) }}
+        {{ formatMoney(balanceSheet.passivus.total) }}
       </div>
     </div>
   </div>
